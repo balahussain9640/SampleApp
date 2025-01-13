@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Clone the repository
-                git 'https://github.com/balahussain9640/SampleApp'
+                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/balahussain9640/SampleApp']]])
             }
         }
 
