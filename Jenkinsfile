@@ -33,9 +33,8 @@ pipeline {
     }
 
     post {
-    success {
-        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
-        echo 'Build Completed Successfully!'
+    always {
+        junit 'target/surefire-reports/*.xml'
     }
     failure {
         echo 'Build Failed. Check Logs!'
