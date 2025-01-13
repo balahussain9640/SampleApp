@@ -3,11 +3,19 @@ pipeline {
     tools {
         maven 'MAVEN_HOME' // Name of the Maven installation configured in Jenkins
     }
+
+    parameters {
+    string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+}
     stages {
         stage('Checkout') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/balahussain9640/SampleApp']]])
-            }
+        steps {
+            git branch: params.BRANCH_NAME, url: 'https://github.com/balahussain9640/SampleApp'
+        }
+        // stage('Checkout') {
+        //     steps {
+        //         checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/balahussain9640/SampleApp']]])
+        //     }
         }
 
         stage('Build') {
