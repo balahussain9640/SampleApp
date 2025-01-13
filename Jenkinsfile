@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven' // Name of the Maven installation configured in Jenkins
+    }
     stages {
         stage('Checkout') {
             steps {
