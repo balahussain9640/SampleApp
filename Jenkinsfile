@@ -33,11 +33,13 @@ pipeline {
     }
 
     post {
-        success {
-            echo 'Build Completed Successfully!'
-        }
-        failure {
-            echo 'Build Failed. Check Logs!'
-        }
+    success {
+        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+        echo 'Build Completed Successfully!'
     }
+    failure {
+        echo 'Build Failed. Check Logs!'
+    }
+ }
+
 }
