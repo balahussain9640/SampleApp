@@ -14,17 +14,16 @@
     <packaging>jar</packaging>
 
     <!-- Dependencies -->
-   <dependencies>
-      <dependency>
-           <groupId>org.testng</groupId>
-           <artifactId>testng</artifactId>
-           <version>7.4.0</version>
-           <scope>test</scope>
-     </dependency>
-  </dependencies>
-
     <dependencies>
-        <!-- JUnit Dependency for Unit Testing -->
+        <!-- TestNG Dependency -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit Dependency -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
