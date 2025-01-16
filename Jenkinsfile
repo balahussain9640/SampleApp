@@ -50,8 +50,8 @@ pipeline {
             steps {
                 script {
                     // Run Docker container
-                    bat "docker run -d --name ${params.IMAGE_NAME}_container -p 8081:8080 ${params.IMAGE_NAME}:latest"
-                }
+                             // Run Docker container on port 8081
+                           bat 'docker run -d --name bala_sampleapp_container -p 8081:8080 bala_sampleapp:latest'
             }
         }
     }
