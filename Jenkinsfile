@@ -6,7 +6,7 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
-        string(name: 'IMAGE_NAME', defaultValue: 'bala_sampleapp', description: 'Docker image name') // Updated with "bala"
+        string(name: 'IMAGE_NAME', defaultValue: 'bala_sampleapp', description: 'Docker image name') // Docker image name with "bala"
     }
 
     stages {
@@ -40,7 +40,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image with "bala" in the name
+                    // Build Docker image with the specified name
                     bat "docker build -t ${params.IMAGE_NAME}:latest ."
                 }
             }
@@ -49,9 +49,9 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Run Docker container
-                             // Run Docker container on port 8081
-                           bat 'docker run -d --name bala_sampleapp_container -p 8081:8080 bala_sampleapp:latest'
+                    // Run Docker container on port 8081
+                    bat "docker run -d --name bala_sampleapp_container -p 8081:8080 ${params.IMAGE_NAME}:latest"
+                }
             }
         }
     }
