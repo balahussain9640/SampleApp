@@ -5,17 +5,15 @@ pipeline {
     }
 
     parameters {
-    string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
-}
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build')
+        string(name: 'IMAGE_NAME', defaultValue: 'bala_sampleapp', description: 'Docker image name') // Updated with "bala"
+    }
+
     stages {
         stage('Checkout') {
-        steps {
-            git branch: params.BRANCH_NAME, url: 'https://github.com/balahussain9640/SampleApp'
-        }
-        // stage('Checkout') {
-        //     steps {
-        //         checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/balahussain9640/SampleApp']]])
-        //     }
+            steps {
+                git branch: params.BRANCH_NAME, url: 'https://github.com/balahussain9640/SampleApp'
+            }
         }
 
         stage('Build') {
@@ -38,15 +36,32 @@ pipeline {
                 bat 'mvn package'
             }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build Docker image with "bala" in the name
+                    bat "docker build -t ${params.IMAGE_NAME}:latest ."
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run Docker container
+                    bat "docker run -d --name ${params.IMAGE_NAME}_container -p 8080:8080 ${params.IMAGE_NAME}:latest"
+                }
+            }
+        }
     }
 
     post {
-    always {
-        junit 'target/surefire-reports/*.xml'
+        always {
+            junit 'target/surefire-reports/*.xml'
+        }
+        failure {
+            echo 'Build Failed. Check Logs!'
+        }
     }
-    failure {
-        echo 'Build Failed. Check Logs!'
-    }
- }
-
 }
