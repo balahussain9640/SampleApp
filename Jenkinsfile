@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     // Run Docker container
-                    bat "docker run -d --name ${params.IMAGE_NAME}_container -p 8080:8080 ${params.IMAGE_NAME}:latest"
+                    bat "docker run -d --name ${params.IMAGE_NAME}_container -p 8081:8080 ${params.IMAGE_NAME}:latest"
                 }
             }
         }
