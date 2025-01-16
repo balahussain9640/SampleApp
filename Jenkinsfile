@@ -49,7 +49,12 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Run Docker container on port 8081
+                    // Stop and remove the existing container if it exists
+                    bat '''
+                    docker ps -a -q --filter "name=bala_sampleapp_container" | findstr . && docker rm -f bala_sampleapp_container || echo "No existing container to remove"
+                    '''
+            
+                    // Run a new container
                     bat "docker run -d --name bala_sampleapp_container -p 8081:8080 ${params.IMAGE_NAME}:latest"
                 }
             }
