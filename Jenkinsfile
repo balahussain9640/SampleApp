@@ -59,6 +59,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    bat '''
+                    docker login -u balahussaindocker -p Bveera786@
+                    '''
+                    
+                    // Tag the Docker image with your Docker Hub repository
+                    bat "docker tag ${params.IMAGE_NAME}:latest balahussaindocker/${params.IMAGE_NAME}:latest"
+                    
+                    // Push the image to Docker Hub
+                    bat "docker push balahussaindocker/${params.IMAGE_NAME}:latest"
+                }
+            }
+        }
     }
 
     post {
